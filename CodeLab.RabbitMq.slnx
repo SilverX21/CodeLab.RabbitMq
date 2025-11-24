@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="CodeLab.RabbitMq.Consumer/CodeLab.RabbitMq.Consumer.csproj" Id="c59d54a2-be0e-49d6-8db2-11aaedff5d29" />
+  <Project Path="CodeLab.RabbitMq.Producer/CodeLab.RabbitMq.Producer.csproj" Id="cf9479be-024f-413e-9116-f35aab7e6cc4" />
+</Solution>
