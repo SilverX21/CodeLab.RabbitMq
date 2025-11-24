@@ -22,6 +22,8 @@ consumer.ReceivedAsync += async (sender, eventArgs) =>
 
     Console.WriteLine($"Received: {message}");
 
+    //here we acknowledge that the message has been processed
+    //here we are only acknowledging the single message we just processed (multiple: false
     await ((AsyncEventingBasicConsumer)sender).Channel.BasicAckAsync(eventArgs.DeliveryTag, multiple: false);
 };
 

@@ -11,7 +11,7 @@ await channel.QueueDeclareAsync(queue: "messages",
     autoDelete: false, //if it's true, the queue will be deleted when there are no more consumers
     arguments: null);
 
-await Task.Delay(10_000);
+//await Task.Delay(10_000);
 
 for (int i = 0; i < 10; i++)
 {
@@ -20,7 +20,7 @@ for (int i = 0; i < 10; i++)
 
     await channel.BasicPublishAsync(exchange: string.Empty,
         routingKey: "messages", //this is the queue name we want to publish our message to
-        mandatory: true,
+        mandatory: true, //this means it will be routed to a queue
         basicProperties: new BasicProperties { Persistent = true },
         body: body);
 
@@ -28,3 +28,5 @@ for (int i = 0; i < 10; i++)
 
     await Task.Delay(2000);
 }
+
+//In the producer, if the messages were sent, but the consumer wasn't up, the messages would be consumed when it comes back online
