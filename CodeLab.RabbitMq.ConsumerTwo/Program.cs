@@ -1,13 +1,14 @@
-﻿using System.Text;
+using System.Text;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
-Console.WriteLine("Consumer 1");
+Console.WriteLine("Consumer 2");
 
 var factory = new ConnectionFactory { HostName = "localhost" };
 using var connection = await factory.CreateConnectionAsync();
 using var channel = await connection.CreateChannelAsync();
 
+//first we declare the exchange we want to use
 await channel.ExchangeDeclareAsync(exchange: "messages",
     durable: true,
     autoDelete: false,
@@ -16,14 +17,14 @@ await channel.ExchangeDeclareAsync(exchange: "messages",
 
 //here we declare the queue we want to use to publish our messages
 await channel.QueueDeclareAsync(
-    queue: "messages-1",
+    queue: "messages-2",
     durable: true,
     exclusive: false,
     autoDelete: false,
     arguments: null);
 
-//here we bind our queue "messages-1" to the "messages" exchange
-await channel.QueueBindAsync("messages-1", "messages", string.Empty);
+//here we bind our queue "messages-2" to the "messages" exchange
+await channel.QueueBindAsync("messages-2", "messages", string.Empty);
 
 Console.WriteLine("Waiting for messages...");
 
@@ -44,6 +45,6 @@ consumer.ReceivedAsync += async (sender, eventArgs) =>
 };
 
 //here we start consuming messages from the queue
-await channel.BasicConsumeAsync(queue: "messages-1", autoAck: false, consumer: consumer);
+await channel.BasicConsumeAsync(queue: "messages-2", autoAck: false, consumer: consumer);
 
 Console.ReadLine();
